@@ -1,0 +1,173 @@
+@extends('layouts.website.master')
+
+@section('custom_css')
+{{-- <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css"> --}}
+@stop
+
+
+
+@section('page_content')
+
+<main class="main__content_wrapper">
+
+    <!-- Start breadcrumb section -->
+    <section class="breadcrumb__section breadcrumb__bg">
+        <div class="container">
+            <div class="row row-cols-1">
+                <div class="col">
+                    <div class="breadcrumb__content text-center">
+                        <h1 class="breadcrumb__content--title text-white mb-25">My Account</h1>
+                        <ul class="breadcrumb__content--menu d-flex justify-content-center">
+                            <li class="breadcrumb__content--menu__items"><a class="text-white" href="index.html">Home</a></li>
+                            <li class="breadcrumb__content--menu__items"><span class="text-white">My Account</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End breadcrumb section -->
+
+    <!-- my account section start -->
+    <section class="my__account--section section--padding">
+        <div class="container">
+            <div class="my__account--section__inner border-radius-10 d-flex">
+                @include('website.partials.account_panel.sidebar')
+                <div class="account__wrapper">
+                    <div class="account__content">
+                        <h3 class="account__content--title mb-20">Addresses</h3>
+                        <button class="new__address--btn primary__btn mb-25" data-open="modal1" type="button">Add a new address</button>
+                        <div class="modal" id="modal1" data-animation="slideInUp">
+                            <div class="modal-dialog quickview__main--wrapper">
+                                <header class="modal-header quickview__header">
+                                    <button class="close-modal quickview__close--btn" aria-label="close modal" data-close>✕ </button>
+                                </header>
+
+                                <div class="product-form">
+                                    <h2>Address</h2>
+                                        <form>
+                                            <label for="text">Country</label>
+                                            <input type="text" id="country" name="country">
+
+                                            <label for="text">City</label>
+                                            <input type="text" id="city" name="city">
+
+                                            <label for="text">Address</label>
+                                            <input type="text" id="address" name="address">
+
+                                            <label for="text">Postal Code</label>
+                                            <input type="text" id="postal_code" name="postal_code">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="text">Make A Primary Address</label>
+
+                                                </div>
+
+                                            <div class="col-md-6">
+                                            <input class="form-check-input" type="checkbox" value="" id="primary_address">
+                                        </div>
+                                    </div><br>
+                                    <button type="submit" class="button">Add Address</button>
+                                        </form>
+
+                                    </div>
+
+                            </div>
+
+                        </div>
+                        <div class="account__details two">
+                            <h4 class="account__details--title">Default</h4>
+                            <p class="account__details--desc">{{ $main_address->city }} <br> {{ $main_address->state }} <br> {{ $main_address->street_address }} <br> {{ $main_address->country }} </p>
+                            {{-- //// --}}
+
+                            <div class="accordion__container">
+                                <div class="accordion__items">
+                                <h2 class="accordion__items--title">
+                                        <button class="faq__accordion--btn accordion__items--button">View Addresses ( {{ count($user_addresses) }})
+                                            <svg class="accordion__items--button__icon" xmlns="http://www.w3.org/2000/svg" width="20.355" height="13.394" viewBox="0 0 512 512"><path d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z" fill="currentColor"/></svg>
+                                        </button>
+                                    </h2>
+                                    <div class="accordion__items--body">
+                                        @foreach ($user_addresses as $single_address)
+                                        <p class="accordion__items--body__desc">{{ $single_address->city }} -- {{ $single_address->state }} -- {{ $single_address->street_address }} -- {{ $single_address->country }} </p>
+                                        <div class="account__details--footer d-flex">
+                                            <a class="account__details--footer__btn" data-open="modal1" href="{{ route('addresses.get_edit',[config('app.locale'),  $single_address->id]) }}">Edit</a>
+                                            <a class="account__details--footer__btn" >Delete</a>
+                                        </div>
+                                        <hr>
+                                        @endforeach
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            {{-- / --}}
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- my account section end -->
+
+    <!-- Start shipping section -->
+    <section class="shipping__section2 shipping__style3 section--padding pt-0">
+        <div class="container">
+            <div class="shipping__section2--inner shipping__style3--inner d-flex justify-content-between">
+                <div class="shipping__items2 d-flex align-items-center">
+                    <div class="shipping__items2--icon">
+                        <img src="assets/img/other/shipping1.png" alt="">
+                    </div>
+                    <div class="shipping__items2--content">
+                        <h2 class="shipping__items2--content__title h3">Shipping</h2>
+                        <p class="shipping__items2--content__desc">From handpicked sellers</p>
+                    </div>
+                </div>
+                <div class="shipping__items2 d-flex align-items-center">
+                    <div class="shipping__items2--icon">
+                        <img src="assets/img/other/shipping2.png" alt="">
+                    </div>
+                    <div class="shipping__items2--content">
+                        <h2 class="shipping__items2--content__title h3">Payment</h2>
+                        <p class="shipping__items2--content__desc">From handpicked sellers</p>
+                    </div>
+                </div>
+                <div class="shipping__items2 d-flex align-items-center">
+                    <div class="shipping__items2--icon">
+                        <img src="assets/img/other/shipping3.png" alt="">
+                    </div>
+                    <div class="shipping__items2--content">
+                        <h2 class="shipping__items2--content__title h3">Return</h2>
+                        <p class="shipping__items2--content__desc">From handpicked sellers</p>
+                    </div>
+                </div>
+                <div class="shipping__items2 d-flex align-items-center">
+                    <div class="shipping__items2--icon">
+                        <img src="assets/img/other/shipping4.png" alt="">
+                    </div>
+                    <div class="shipping__items2--content">
+                        <h2 class="shipping__items2--content__title h3">Support</h2>
+                        <p class="shipping__items2--content__desc">From handpicked sellers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End shipping section -->
+
+</main>
+
+
+@endsection
+@section('custom_script')
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+<script>
+    let table = new DataTable('#myTable');
+</script> --}}
+@stop
